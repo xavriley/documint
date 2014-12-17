@@ -1,0 +1,44 @@
+<% if @documents.present? %>
+
+  <style>
+    pre { height: 250px; overflow: scroll; } 
+  </style>
+
+  <div class="container">
+    <h1>Search Results for "<%= params[:query] %>"</h1>
+    <div class="col-lg-12">
+      <% @documents.each do |document| %>
+      <div class="row well">
+        <% phrases = Array(params[:query])
+         
+           expts = phrases.map do |exword|
+             excerpt(document.content, exword, separator: ' ', radius: 20)
+           end.compact
+        
+           if expts.empty?
+             phrases = (params[:query].split(/\s/)).compact
+         
+              expts = phrases.map do |exword|
+                excerpt(document.content, exword, separator: ' ', radius: 20)
+              end.compact.uniq
+           end
+        %>
+
+        <p><%= link_to document.source_url, document_path(url: CGI.escape(document.source_url)) %></p>
+        <% expts.each do |e| %>
+          <p><%= highlight(e, phrases, highlighter: '<mark><strong>\1</strong></mark>') %></p>
+        <% end %>
+        <h4>Content Type: <%= YAML.load(document.metadata)["Content-Type"] %></h4>
+      </div>
+      <% end %>
+      <% if @documents.length == 20 %>
+      <div class="row">
+        <p>Limited to the top 20 results</p>
+      </div>
+      <% end %>
+    </div>
+  </div>
+  
+<% else %>
+  <h2>Sorry, we couldn't find any matches</h2>
+<% end %>

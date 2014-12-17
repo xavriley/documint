@@ -1,0 +1,80 @@
+<div class="container">
+  <div class="row-mt">
+    <div class="jumbotron">
+      <h1><%= @title %></h1>
+
+      <%= form_tag(document_path, method: :get) do %>
+        <div class="input-group-lg input-group">
+          <%= text_field_tag :url, nil, { class: 'form-control', placeholder: 'Enter a url e.g. http://www.publications.parliament.uk/pa/cm201415/cmhansrd/chan53.pdf'} %>
+
+          <span class="input-group-btn">
+            <%= submit_tag 'Go', class: 'btn btn-lg btn-success' %>
+          </span>
+        </div>
+      <% end %>
+
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row mt">
+    <div class="jumbotron">
+      <h1>Turn any document into data</h1>
+      <p>
+      The web is a mess when it comes to document formats, especially when you're trying to work with data.<br/>
+      Documint can convert hundreds of formats into useable plain text and make them searchable and ready for work.
+      </p>
+    </div><!-- col-lg-12 -->
+  </div><!-- row -->
+</div>
+
+<div class="container">
+  <div class="row-mt">
+    <div class="jumbotron">
+      <h1>Search the Mint</h1>
+
+      <%= form_tag(search_path, method: :get) do %>
+        <div class="input-group-lg input-group">
+          <%= text_field_tag :query, nil, { class: 'form-control', placeholder: 'Enter a search term e.g. David Cameron'} %>
+
+          <span class="input-group-btn">
+            <%= submit_tag 'Go', class: 'btn btn-lg btn-success' %>
+          </span>
+        </div>
+      <% end %>
+
+    </div>
+  </div>
+</div>
+
+<div id="services">
+  <div class="container">
+    <div class="row mt">
+      <div class="col-lg-1 centered">
+        <i class="fa fa-certificate"></i>
+      </div>
+      <div class="col-lg-3">
+        <h3>Quality Design</h3>
+        <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
+      </div>
+
+      <div class="col-lg-1 centered">
+        <i class="fa fa-question-circle"></i>
+      </div>
+      <div class="col-lg-3">
+        <h3>Awesome Support</h3>
+        <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
+      </div>
+
+
+      <div class="col-lg-1 centered">
+        <i class="fa fa-globe"></i>
+      </div>
+      <div class="col-lg-3">
+        <h3>Global Services</h3>
+        <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
+      </div>
+    </div>
+  </div>
+</div>

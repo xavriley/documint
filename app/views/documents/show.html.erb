@@ -1,0 +1,60 @@
+<% if @document.present? %>
+
+  <style>
+    pre { height: 250px; overflow: scroll; } 
+  </style>
+
+  <div class="container">
+    <h1><%= @document.source_url %></h1>
+    <div class="col-lg-7 pull-left">
+      <div class="row">
+        <h2>Original</h2>
+
+        <% content_type = (YAML.load(@document.metadata)["Content-Type"]).to_s %>
+        <p><%= content_type %></p>
+        <% if content_type[/pdf|html/] %>
+          <iframe style="min-height: 823px;" height="100%" width="100%" src="<%= @document.source_url %>"></iframe>
+        <% else %>
+          <%= link_to 'Download original', @document.source_url, {target: "_blank"} %>
+          <pre style="height: 500px"><code><%= @document.content %></code></pre>
+          <% no_original = true %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="col-lg-5 pull-right">
+      <div class="row">
+        <h2>Entities</h2>
+        <ul class="entities" style="height:217px; overflow:scroll">
+          <h5>Organizations</h5>
+          <% @document.entities.each do |ent| %>
+            <li><%= link_to "#{ent} &nbsp; <i class=\"fa fa-external-link\"></i>".html_safe, search_path(query: ent), {target: "_blank"} %></li>
+          <% end %>
+          <h5>People</h5>
+          <% @document.persons.each do |ent| %>
+            <li><%= link_to "#{ent} &nbsp; <i class=\"fa fa-external-link\"></i>".html_safe, search_path(query: ent), {target: "_blank"} %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-lg-5 pull-right">
+      <div class="row">
+        <h2>Metadata</h2>
+        <pre><code><%= @document.metadata.to_yaml %></code></pre>
+      </div>
+    </div>
+
+    <% unless no_original %>
+    <div class="col-lg-5 pull-right">
+      <div class="row">
+        <h2>Plain text</h2>
+        <pre><code><%= @document.content %></code></pre>
+      </div>
+    </div>
+    <% end %>
+  </div>
+  
+<% else %>
+  <h2>Loading, please wait...</h2>
+<% end %>
